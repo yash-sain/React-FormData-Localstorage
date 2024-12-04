@@ -1,6 +1,12 @@
 import React, { useEffect, useState } from "react";
 
-const RendreingForm = ({ onFormData, editFormData, editSelectedId ,onSetData,onSetEditSelectedId}) => {
+const RendreingForm = ({
+  onFormData,
+  editFormData,
+  editSelectedId,
+  onSetData,
+  onSetEditSelectedId
+}) => {
   const [name, setName] = useState("");
   const [age, setAge] = useState("");
   const [schoolName, setSchoolName] = useState("");
@@ -10,12 +16,24 @@ const RendreingForm = ({ onFormData, editFormData, editSelectedId ,onSetData,onS
   const handleSubmit = (e) => {
     e?.preventDefault();
 
-    if (!name || !age || !schoolName || !city || !classSet)
-      return alert("all Fields no fill");
+    if (!name || !age || !schoolName || !city || !classSet) return
 
-    if(editSelectedId){
-      onSetData((data)=> data?.map((item)=>item?.id === editSelectedId ? {name,age,schoolName,city,id:editSelectedId, class: classSet}: item))
-    }else{
+    if (editSelectedId) {
+      onSetData((data) =>
+        data?.map((item) =>
+          item?.id === editSelectedId
+            ? {
+                name,
+                age,
+                schoolName,
+                city,
+                id: editSelectedId,
+                class: classSet
+              }
+            : item
+        )
+      );
+    } else {
       const data = {
         id: crypto?.randomUUID(),
         name,
@@ -24,12 +42,11 @@ const RendreingForm = ({ onFormData, editFormData, editSelectedId ,onSetData,onS
         city,
         class: classSet
       };
-  
+
       onFormData(data);
     }
 
-    
-    onSetEditSelectedId("")
+    onSetEditSelectedId("");
     setName("");
     setAge("");
     setSchoolName("");
@@ -37,15 +54,28 @@ const RendreingForm = ({ onFormData, editFormData, editSelectedId ,onSetData,onS
     setClassSet("");
   };
 
-useEffect(() => {
-  if (editFormData?.id === editSelectedId) {
-    setName(editFormData?.name);
-    setAge(editFormData?.age);
-    setSchoolName(editFormData?.schoolName);
-    setCity(editFormData?.city);
-    setClassSet(editFormData?.class);
-  }
-}, [editSelectedId]);
+  useEffect(() => {
+    if (editFormData?.id === editSelectedId) {
+      setName(editFormData?.name);
+      setAge(editFormData?.age);
+      setSchoolName(editFormData?.schoolName);
+      setCity(editFormData?.city);
+      setClassSet(editFormData?.class);
+    }
+  }, [editSelectedId]);
+
+  // useEffect(() => {
+  //   const logicPanel = (e) => {
+  //     if (e?.code === "Enter") {
+  //       handleSubmit();
+  //     }
+  //   };
+
+  //   document.addEventListener("keydown", logicPanel);
+  //   return () => {
+  //     document.removeEventListener("keydown", logicPanel);
+  //   };
+  // }, [editSelectedId, handleSubmit]);
 
   return (
     <form className="form" onSubmit={handleSubmit}>
