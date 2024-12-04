@@ -9,12 +9,11 @@ const RendreingListing = () => {
     const storedValue = JSON.parse(localStorage.getItem("tableData"));
     return storedValue?.length > 0 ? storedValue : [];
   });
-
   const [editFormData, setEditFormData] = useState({});
   const [editSelectedId, setEditSelectedId] = useState(null);
 
   const handleFormData = (value) => {
-    setData((x) => [...x, value]);
+    setData((curItem) => [...curItem, value]);
   };
 
   const handleEdit = (id) => {

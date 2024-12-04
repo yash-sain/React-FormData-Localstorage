@@ -35,18 +35,18 @@ const RendreingItemListing = ({
                   <td>{curItem?.city}</td>
                   <td>{curItem?.class}</td>
                   <td>
-                    <p
-                      style={{ cursor: "pointer" }}
+                    <span
+                      style={{ cursor: "pointer", color: "blue" }}
                       onClick={() => handleTableEditData(curItem?.id)}
                     >
                       Edit{" "}
-                    </p>
-                    <p
-                      style={{ cursor: "pointer" }}
+                    </span>
+                    <span
+                      style={{ cursor: "pointer", color: "red" }}
                       onClick={() => handleDelete(curItem?.id)}
                     >
                       Delete
-                    </p>
+                    </span>
                   </td>
                 </tr>
               );
