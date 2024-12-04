@@ -14,7 +14,7 @@ const RendreingForm = ({ onFormData, editFormData, editSelectedId ,onSetData,onS
       return alert("all Fields no fill");
 
     if(editSelectedId){
-      onSetData((data)=> data?.map((item)=>item?.id === editSelectedId ? {name,age,schoolName,city,id:editSelectedId}: item))
+      onSetData((data)=> data?.map((item)=>item?.id === editSelectedId ? {name,age,schoolName,city,id:editSelectedId, class: classSet}: item))
     }else{
       const data = {
         id: crypto?.randomUUID(),
