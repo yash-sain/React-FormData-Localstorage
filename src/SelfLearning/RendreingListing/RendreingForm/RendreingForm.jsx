@@ -18,7 +18,7 @@ const RendreingForm = ({
 
     if (!name || !age || !schoolName || !city || !classSet) return
 
-    if (editSelectedId) {
+    if (editFormData?.id) {
       onSetData((data) =>
         data?.map((item) =>
           item?.id === editSelectedId
@@ -64,18 +64,18 @@ const RendreingForm = ({
     }
   }, [editSelectedId]);
 
-  // useEffect(() => {
-  //   const logicPanel = (e) => {
-  //     if (e?.code === "Enter") {
-  //       handleSubmit();
-  //     }
-  //   };
+  useEffect(() => {
+    const logicPanel = (e) => {
+      if (e?.code === "Enter") {
+        handleSubmit();
+      }
+    };
 
-  //   document.addEventListener("keydown", logicPanel);
-  //   return () => {
-  //     document.removeEventListener("keydown", logicPanel);
-  //   };
-  // }, [editSelectedId, handleSubmit]);
+    document.addEventListener("keydown", logicPanel);
+    return () => {
+      document.removeEventListener("keydown", logicPanel);
+    };
+  }, [handleSubmit]);
 
   return (
     <form className="form" onSubmit={handleSubmit}>
