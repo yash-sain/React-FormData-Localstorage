@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 
 const RendreingForm = ({
   onFormData,
@@ -23,13 +23,13 @@ const RendreingForm = ({
         data?.map((item) =>
           item?.id === editSelectedId
             ? {
-                name,
-                age,
-                schoolName,
-                city,
-                id: editSelectedId,
-                class: classSet
-              }
+              name,
+              age,
+              schoolName,
+              city,
+              id: editSelectedId,
+              class: classSet
+            }
             : item
         )
       );
@@ -64,17 +64,11 @@ const RendreingForm = ({
     }
   }, [editSelectedId]);
 
-  useEffect(() => {
-    const logicPanel = (e) => {
-      if (e?.code === "Enter") {
-        handleSubmit();
-      }
-    };
-
-    document.addEventListener("keydown", logicPanel);
-    return () => {
-      document.removeEventListener("keydown", logicPanel);
-    };
+  const handleKeyDown = useCallback((e) => {
+    if (e.key === "Enter") {
+      e?.preventDefault()
+      handleSubmit();
+    }
   }, [handleSubmit]);
 
   return (
@@ -86,6 +80,7 @@ const RendreingForm = ({
           id="name"
           value={name}
           onChange={(e) => setName(e?.target?.value)}
+          onKeyDown={(e) => handleKeyDown(e)}
         />
       </div>
       <div className="rendreing-form">
@@ -95,6 +90,7 @@ const RendreingForm = ({
           id="age"
           value={age}
           onChange={(e) => setAge(Number(e?.target?.value))}
+          onKeyDown={(e) => handleKeyDown(e)}
         />
       </div>
       <div className="rendreing-form">
@@ -104,6 +100,7 @@ const RendreingForm = ({
           id="school-name"
           value={schoolName}
           onChange={(e) => setSchoolName(e?.target?.value)}
+          onKeyDown={(e) => handleKeyDown(e)}
         />
       </div>
       <div className="rendreing-form">
@@ -113,6 +110,7 @@ const RendreingForm = ({
           id="city"
           value={city}
           onChange={(e) => setCity(e?.target?.value)}
+          onKeyDown={(e) => handleKeyDown(e)}
         />
       </div>
       <div className="rendreing-form">
@@ -122,6 +120,7 @@ const RendreingForm = ({
           id="class"
           value={classSet}
           onChange={(e) => setClassSet(Number(e?.target?.value))}
+          onKeyDown={(e) => handleKeyDown(e)}
         />
       </div>
       <button>Submit</button>
