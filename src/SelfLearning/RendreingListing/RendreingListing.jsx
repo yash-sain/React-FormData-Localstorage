@@ -28,12 +28,32 @@ const RendreingListing = () => {
   };
 
   const handleSelectedId = (id) => {
-    setEditSelectedId((selectId => id === selectId ? null : id))
+    setEditSelectedId((selectId => id === selectId ? null : id));
   }
 
   useEffect(() => {
     localStorage.setItem("tableData", JSON.stringify(data));
   }, [data]);
+
+  const handleOrderChange = (e) => {
+    const sortOrder = e?.target?.value;
+
+    setData(prevData => {
+      const newData = [...prevData];
+
+      if (sortOrder === "asc") {
+        return newData.sort((a, b) => {
+          return a?.name?.toLowerCase()?.localeCompare(b?.name?.toLowerCase());
+        });
+      } else if (sortOrder === "desc") {
+        return newData.sort((a, b) => {
+          return b?.name?.toLowerCase()?.localeCompare(a?.name?.toLowerCase());
+        });
+      }
+
+      return newData;
+    });
+  };
 
   return (
     <div className="container">
@@ -45,6 +65,10 @@ const RendreingListing = () => {
         onSetEditSelectedId={setEditSelectedId}
         onSetData={setData}
       />
+      <select onChange={handleOrderChange}>
+        <option value="asc">A to Z</option>
+        <option value="desc">Z to A</option>
+      </select>
       <RendreingItemListing
         data={data}
         handleDelete={handleDelete}
